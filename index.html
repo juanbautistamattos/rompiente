@@ -160,10 +160,11 @@ for(x=0;x<W;x+=4){var y2=Y(x,p,k,tm);if(y2<-30||y2>H+30)continue;c.fillStyle='rg
 c.beginPath();c.arc(x+Math.random()*4,y2+Math.random()*34-10,.8+Math.random()*3*f,0,7);c.fill()}}}
 var o=Math.max(0,Math.min(1,(p-.36)/.1))*(1-Math.max(0,Math.min(1,(p-.68)/.12)));lg.style.opacity=o;lg.style.transform='translate(-50%,-50%) scale('+(.9+.1*o)+')';
 if(p>.74&&!went){went=true;B.classList.remove('lock');B.classList.add('go')}
-if(p<1)requestAnimationFrame(frame);else end()}
+if(p<1)requestAnimationFrame(sf);else end()}
 var started=false,gate=document.getElementById('gate');
-function go(){if(started)return;started=true;gate.style.display='none';requestAnimationFrame(frame)}
-function wait(){if(!started)gate.style.display='grid'}
+function sf(ts){try{frame(ts)}catch(e){end()}}
+function go(){if(started)return;started=true;gate.style.display='none';requestAnimationFrame(sf);setTimeout(function(){if(!done&&ov.parentNode){done=true;end()}},T+2500)}
+function wait(){if(!started){gate.style.display='grid';setTimeout(go,1600)}}
 aud.volume=.6;var pr=aud.play();
 if(pr&&pr.then){pr.then(go,wait);setTimeout(wait,900)}else{wait()}
 ov.addEventListener('click',function(){if(!started){play();go()}else{done=true;end()}});
